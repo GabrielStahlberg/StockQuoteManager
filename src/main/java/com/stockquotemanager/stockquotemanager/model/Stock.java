@@ -1,19 +1,27 @@
 package com.stockquotemanager.stockquotemanager.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
-@Entity
-@Table(name = "tbstock")
 public class Stock implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "stock_id")
     private String id;
+    private String description;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<StockQuotes> stockQuotes;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

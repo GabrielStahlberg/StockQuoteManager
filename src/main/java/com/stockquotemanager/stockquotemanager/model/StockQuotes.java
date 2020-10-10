@@ -1,5 +1,8 @@
 package com.stockquotemanager.stockquotemanager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.context.annotation.Lazy;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -17,8 +20,8 @@ public class StockQuotes implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Quote> quotes;
 
-    @ManyToOne
-    @JoinColumn(name = "stock_id")
+    @Column()
+    @JsonIgnore
     private Stock stock;
 
     public String getId() {
@@ -35,5 +38,13 @@ public class StockQuotes implements Serializable {
 
     public void setQuotes(List<Quote> quotes) {
         this.quotes = quotes;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 }

@@ -30,9 +30,12 @@ public class StockQuotesResource {
 
     @PostMapping
     public ResponseEntity<Void> persist(@RequestBody StockQuotes stockQuotes) {
-        service.save(stockQuotes);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(stockQuotes.getId()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        StockQuotes stockQuotesSaved = service.save(stockQuotes);
+        if(null != stockQuotesSaved) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(stockQuotes.getId()).toUri());
+            return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 }
