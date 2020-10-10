@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class StockManagerService {
 
-    private static final String BASE_URL = "http://localhost:8080/";
+    private static final String BASE_URL = "http://externalapp:8080/";
     private RestTemplate restTemplate = new RestTemplate();
 
     public List<LinkedHashMap<String, String>> findAllStocks() {
