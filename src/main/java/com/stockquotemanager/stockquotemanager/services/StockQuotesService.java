@@ -2,6 +2,7 @@ package com.stockquotemanager.stockquotemanager.services;
 
 import com.stockquotemanager.stockquotemanager.model.Notification;
 import com.stockquotemanager.stockquotemanager.model.StockQuotes;
+import com.stockquotemanager.stockquotemanager.model.dto.StockQuotesDTO;
 import com.stockquotemanager.stockquotemanager.repository.StockQuotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,20 @@ public class StockQuotesService {
         managerService.saveNotification(new Notification("localhost", "8081"));
     }
 
-    public List<StockQuotes> findAll() {
-        return repository.findAll();
+    public List<StockQuotesDTO> findAll() {
+        List<StockQuotes> stockQuotes = repository.findAll();
+        List<StockQuotesDTO> stockQuotesDTO = new ArrayList<>();
+
+        for (StockQuotes item : stockQuotes) {
+            stockQuotesDTO.add(item.toDTO());
+        }
+
+        return stockQuotesDTO;
     }
 
-    public StockQuotes findById(String id) {
-        return repository.findById(id).orElseThrow(() -> new NoSuchElementException("StockQuotes not found"));
+    public StockQuotesDTO findById(String id) {
+        StockQuotes stockQuotes = repository.findById(id).orElseThrow(() -> new NoSuchElementException("StockQuotes not found"));
+        return stockQuotes.toDTO();
     }
 
     public StockQuotes save(StockQuotes stockQuotes) {

@@ -1,5 +1,7 @@
 package com.stockquotemanager.stockquotemanager.model;
 
+import com.stockquotemanager.stockquotemanager.model.dto.QuoteDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -51,5 +53,9 @@ public class Quote implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public QuoteDTO toDTO() {
+        return new QuoteDTO(this.date, this.quotation);
     }
 }

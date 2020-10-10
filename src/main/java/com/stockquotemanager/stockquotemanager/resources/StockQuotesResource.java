@@ -1,6 +1,7 @@
 package com.stockquotemanager.stockquotemanager.resources;
 
 import com.stockquotemanager.stockquotemanager.model.StockQuotes;
+import com.stockquotemanager.stockquotemanager.model.dto.StockQuotesDTO;
 import com.stockquotemanager.stockquotemanager.services.StockQuotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,12 +20,12 @@ public class StockQuotesResource {
     private StockQuotesService service;
 
     @GetMapping("stockquote")
-    public ResponseEntity<List<StockQuotes>> findAll() {
+    public ResponseEntity<List<StockQuotesDTO>> findAll() {
         return ResponseEntity.ok().body(service.findAll());
     }
 
     @GetMapping("stockquote/{id}")
-    public ResponseEntity<StockQuotes> getById(@PathVariable String id) {
+    public ResponseEntity<StockQuotesDTO> getById(@PathVariable String id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 

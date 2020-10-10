@@ -1,7 +1,11 @@
 package com.stockquotemanager.stockquotemanager.model;
 
+import com.stockquotemanager.stockquotemanager.model.dto.QuoteDTO;
+import com.stockquotemanager.stockquotemanager.model.dto.StockQuotesDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,5 +46,13 @@ public class StockQuotes implements Serializable {
 
     public void setStock(Stock stock) {
         this.stock = stock;
+    }
+
+    public StockQuotesDTO toDTO() {
+        List<QuoteDTO> quoteDTOS = new ArrayList<>();
+        for(Quote item : this.quotes) {
+            quoteDTOS.add(item.toDTO());
+        }
+        return new StockQuotesDTO(this.id, quoteDTOS);
     }
 }
