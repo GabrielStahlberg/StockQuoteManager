@@ -12,30 +12,36 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/stockquote")
+@RequestMapping(value = "/")
 public class StockQuotesResource {
 
     @Autowired
     private StockQuotesService service;
 
-    @GetMapping
+    @GetMapping("stockquote")
     public ResponseEntity<List<StockQuotes>> findAll() {
         return ResponseEntity.ok().body(service.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("stockquote/{id}")
     public ResponseEntity<StockQuotes> getById(@PathVariable String id) {
         return ResponseEntity.ok().body(service.findById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Void> persist(@RequestBody StockQuotes stockQuotes) {
+    @PostMapping("stockquote")
+    public ResponseEntity persist(@RequestBody StockQuotes stockQuotes) {
         StockQuotes stockQuotesSaved = service.save(stockQuotes);
         if(null != stockQuotesSaved) {
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(stockQuotes.getId()).toUri());
             return new ResponseEntity<>(headers, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("This Stock doesn't exist.");
+    }
+
+    @DeleteMapping("stockcache")
+    public ResponseEntity<Void> cleanCache() {
+        service.cleanCache();
+        return ResponseEntity.ok().build();
     }
 }
