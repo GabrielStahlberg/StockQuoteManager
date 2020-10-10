@@ -18,11 +18,20 @@ public class StockQuotes implements Serializable {
     @Column(name = "stockquotes_id")
     private String id;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Quote> quotes;
 
     @Column()
     private Stock stock;
+
+    public StockQuotes() {
+    }
+
+    public StockQuotes(String id, List<Quote> quotes, Stock stock) {
+        this.id = id;
+        this.quotes = quotes;
+        this.stock = stock;
+    }
 
     public String getId() {
         return id;

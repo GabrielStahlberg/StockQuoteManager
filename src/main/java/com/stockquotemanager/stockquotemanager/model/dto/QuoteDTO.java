@@ -1,10 +1,13 @@
 package com.stockquotemanager.stockquotemanager.model.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class QuoteDTO {
+public class QuoteDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String date;
     private BigDecimal quotation;

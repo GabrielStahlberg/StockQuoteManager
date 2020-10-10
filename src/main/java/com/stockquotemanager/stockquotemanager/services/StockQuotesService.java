@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class StockQuotesService {
@@ -41,13 +41,16 @@ public class StockQuotesService {
     }
 
     public StockQuotesDTO findById(String id) {
-        StockQuotes stockQuotes = repository.findById(id).orElseThrow(() -> new NoSuchElementException("StockQuotes not found"));
-        return stockQuotes.toDTO();
+        Optional<StockQuotes> stockQuotes = repository.findById(id);
+        if(stockQuotes.isPresent()) {
+            return stockQuotes.get().toDTO();
+        }
+        return null;
     }
 
     public StockQuotes save(StockQuotes stockQuotes) {
         StockQuotes stockQuotesSaved = null;
-        if(isStockRegistered(stockQuotes.getStock().getId())) {
+        if(null != stockQuotes && isStockRegistered(stockQuotes.getStock().getId())) {
             stockQuotesSaved = repository.save(stockQuotes);
         }
         return stockQuotesSaved;

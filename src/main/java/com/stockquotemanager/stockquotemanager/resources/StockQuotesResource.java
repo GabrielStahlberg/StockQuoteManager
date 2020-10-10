@@ -25,8 +25,12 @@ public class StockQuotesResource {
     }
 
     @GetMapping("stockquote/{id}")
-    public ResponseEntity<StockQuotesDTO> getById(@PathVariable String id) {
-        return ResponseEntity.ok().body(service.findById(id));
+    public ResponseEntity getById(@PathVariable String id) {
+        StockQuotesDTO stockQuotesDTO = service.findById(id);
+        if(null != stockQuotesDTO) {
+            return ResponseEntity.ok().body(stockQuotesDTO);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This Stock Quote doesn't exist.");
     }
 
     @PostMapping("stockquote")

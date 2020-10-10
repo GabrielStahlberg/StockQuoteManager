@@ -9,6 +9,13 @@ public class Stock implements Serializable {
     private String id;
     private String description;
 
+    public Stock(String id) {
+        this.id = id;
+    }
+
+    public Stock() {
+    }
+
     public String getId() {
         return id;
     }
